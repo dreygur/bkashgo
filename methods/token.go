@@ -2,8 +2,8 @@ package methods
 
 import (
 	"encoding/json"
-	"net/url"
 
+	"github.com/dreygur/bkashgo/common"
 	"github.com/dreygur/bkashgo/hooks"
 	"github.com/dreygur/bkashgo/models"
 )
@@ -11,23 +11,15 @@ import (
 func (b *Bkash) GrantToken() (*models.TokenResponse, error) {
 	// Mandatory field validation
 	if b.AppKey == "" || b.AppSecret == "" || b.Username == "" || b.Password == "" {
-		return nil, ErrEmptyRequiredField
+		return nil, common.ErrEmptyRequiredField
 	}
 
-	var data = make(map[string]string)
-
-	data["app_key"] = b.AppKey
-	data["app_secret"] = b.AppSecret
-
-	var storeUrl string
-	if b.IsLiveStore {
-		storeUrl = BKASH_LIVE_GATEWAY
-	} else {
-		storeUrl = BKASH_SANDBOX_GATEWAY
+	data := models.TokenRequest{
+		AppKey:    b.AppKey,
+		AppSecret: b.AppSecret,
 	}
-	u, _ := url.ParseRequestURI(storeUrl)
-	u.Path += BKASH_GRANT_TOKEN_URI
 
+	u := hooks.GenerateURI(b.IsLiveStore, common.BKASH_GRANT_TOKEN_URI)
 	grantTokenURL := u.String()
 
 	jsonData, err := json.Marshal(data)
@@ -52,7 +44,7 @@ func (b *Bkash) GrantToken() (*models.TokenResponse, error) {
 func (b *Bkash) RefreshToken(token *models.TokenRequest) (*models.TokenResponse, error) {
 	// Mandatory field validation
 	if b.AppKey == "" || b.AppSecret == "" || token.RefreshToken == "" || b.Username == "" || b.Password == "" {
-		return nil, ErrEmptyRequiredField
+		return nil, common.ErrEmptyRequiredField
 	}
 
 	data := models.TokenRequest{
@@ -61,15 +53,7 @@ func (b *Bkash) RefreshToken(token *models.TokenRequest) (*models.TokenResponse,
 		RefreshToken: token.RefreshToken,
 	}
 
-	var storeUrl string
-	if b.IsLiveStore {
-		storeUrl = BKASH_LIVE_GATEWAY
-	} else {
-		storeUrl = BKASH_SANDBOX_GATEWAY
-	}
-	u, _ := url.ParseRequestURI(storeUrl)
-	u.Path += BKASH_REFRESH_TOKEN_URI
-
+	u := hooks.GenerateURI(b.IsLiveStore, common.BKASH_REFRESH_TOKEN_URI)
 	refreshTokenURL := u.String()
 
 	jsonData, err := json.Marshal(data)
