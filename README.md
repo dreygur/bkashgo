@@ -12,7 +12,6 @@ Ref:
 
 - Tokenized Checkout Process
 - Token Management Overview
-- Grant Token
 - Refresh Token
 - Create Agreement
 - Execute Agreement
@@ -26,6 +25,6 @@ Ref:
 - Refund Status
 
 ### __Implemented__
-- None
+- Grant Token
 
 Made with ❤️ by [Rakibul Yeasin](https://facebook.com/dreygur)
