@@ -1,9 +1,19 @@
 package models
 
-// Response models for TOKENIZED CHECKOUT
+// Error response
 type BkashError struct {
 	ErrorCode    string `json:"errorCode,omitempty"`
 	ErrorMessage string `json:"errorMessage,omitempty"`
+}
+
+// Grant/Refresh Token Response
+type TokenResponse struct {
+	ExpiresIn     int    `json:"expires_in,omitempty"`
+	IdToken       string `json:"id_token,omitempty"`
+	RefreshToken  string `json:"refresh_token,omitempty"`
+	TokenType     string `json:"token_type,omitempty"`
+	StatusCode    string `json:"statusCode,omitempty"`
+	StatusMessage string `json:"statusMessage,omitempty"`
 }
 
 type CreateAgreementValidationResponse struct {
@@ -11,15 +21,7 @@ type CreateAgreementValidationResponse struct {
 	Status    string `json:"status,omitempty"`
 }
 
-type Token struct {
-	TokenType     string `json:"token_type,omitempty"`
-	ExpiresIn     int    `json:"expires_in,omitempty"`
-	IdToken       string `json:"id_token,omitempty"`
-	RefreshToken  string `json:"refresh_token,omitempty"`
-	StatusCode    string `json:"statusCode,omitempty"`
-	StatusMessage string `json:"statusMessage,omitempty"`
-}
-
+// CreateAgreement Response
 type CreateAgreementResponse struct {
 	PaymentID            string `json:"paymentID,omitempty"`
 	BkashURL             string `json:"bkashURL,omitempty"`
@@ -31,6 +33,7 @@ type CreateAgreementResponse struct {
 	StatusMessage        string `json:"statusMessage,omitempty"`
 }
 
+// ExecuteAgreement Response
 type ExecuteAgreementResponse struct {
 	PaymentID            string `json:"paymentID,omitempty"`
 	AgreementID          string `json:"agreementID,omitempty"`
@@ -42,6 +45,7 @@ type ExecuteAgreementResponse struct {
 	StatusMessage        string `json:"statusMessage,omitempty"`
 }
 
+// QueryAgreement Response
 type QueryAgreementResponse struct {
 	PaymentID            string `json:"paymentID,omitempty"`
 	AgreementID          string `json:"agreementID,omitempty"`
@@ -55,6 +59,7 @@ type QueryAgreementResponse struct {
 	StatusMessage        string `json:"statusMessage,omitempty"`
 }
 
+// CancelAgreement Response
 type CancelAgreementResponse struct {
 	PaymentID         string `json:"paymentID,omitempty"`
 	AgreementID       string `json:"agreementID,omitempty"`
@@ -65,6 +70,7 @@ type CancelAgreementResponse struct {
 	StatusMessage     string `json:"statusMessage,omitempty"`
 }
 
+// CreatePayment Response
 type CreatePaymentResponse struct {
 	PaymentID             string `json:"paymentID,omitempty"`
 	AgreementID           string `json:"agreementID,omitempty"`
@@ -83,6 +89,7 @@ type CreatePaymentResponse struct {
 	StatusMessage         string `json:"statusMessage,omitempty"`
 }
 
+// ExecutePayment Response
 type ExecutePaymentResponse struct {
 	PaymentID             string `json:"paymentID,omitempty"`
 	AgreementID           string `json:"agreementID,omitempty"`
@@ -101,6 +108,7 @@ type ExecutePaymentResponse struct {
 	StatusMessage         string `json:"statusMessage,omitempty"`
 }
 
+// QueryPayment Response
 type QueryPaymentResponse struct {
 	PaymentID              string `json:"paymentID,omitempty"`
 	Mode                   string `json:"mode,omitempty"`
@@ -118,6 +126,7 @@ type QueryPaymentResponse struct {
 	StatusMessage          string `json:"statusMessage,omitempty"`
 }
 
+// SearchTransaction Response
 type SearchTransactionResponse struct {
 	Amount                string `json:"amount,omitempty"`
 	CompletedTime         string `json:"completed_time,omitempty"`
@@ -131,4 +140,15 @@ type SearchTransactionResponse struct {
 	StatusCode            string `json:"statusCode,omitempty"`
 	StatusMessage         string `json:"statusMessage,omitempty"`
 	TrxID                 string `json:"trxID,omitempty"`
+}
+
+// Refund Transaction/Status Response
+type RefundResponse struct {
+	CompletedTime     string `json:"completedTime,omitempty"`
+	TransactionStatus string `json:"transactionStatus,omitempty"`
+	OriginalTrxID     string `json:"originalTrxID,omitempty"`
+	RefundTrxID       string `json:"refundTrxID,omitempty"`
+	Amount            string `json:"amount,omitempty"`
+	Currency          string `json:"currency,omitempty"`
+	Charge            string `json:"charge,omitempty"`
 }

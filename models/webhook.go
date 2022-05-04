@@ -1,19 +1,21 @@
 package models
 
+// BkashIPN Request/Response payload
 type BkashIPNPayload struct {
 	Type             string      `json:"Type,omitempty"`
 	MessageId        string      `json:"MessageId,omitempty"`
 	Token            string      `json:"Token,omitempty"`
 	TopicArn         string      `json:"TopicArn,omitempty"`
-	Message          interface{} `json:"Message,omitempty"`
 	SubscribeURL     string      `json:"SubscribeURL,omitempty"`
 	Timestamp        string      `json:"Timestamp,omitempty"`
 	SignatureVersion string      `json:"SignatureVersion,omitempty"`
 	Signature        string      `json:"Signature,omitempty"`
 	SigningCertURL   string      `json:"SigningCertURL,omitempty"`
 	UnSubscribeURL   string      `json:"UnSubscribeURL,omitempty"`
+	Message          interface{} `json:"Message,omitempty"`
 }
 
+// Message for response
 type Message struct {
 	DateTime               string `json:"dateTime,omitempty"`
 	DebitMSISDN            string `json:"debitMSISDN,omitempty"`
