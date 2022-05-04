@@ -9,7 +9,6 @@ import (
 )
 
 func (b *Bkash) GrantToken() (*models.TokenResponse, error) {
-	// Mandatory field validation
 	if b.AppKey == "" || b.AppSecret == "" || b.Username == "" || b.Password == "" {
 		return nil, common.ErrEmptyRequiredField
 	}
@@ -42,7 +41,6 @@ func (b *Bkash) GrantToken() (*models.TokenResponse, error) {
 }
 
 func (b *Bkash) RefreshToken(token *models.TokenRequest) (*models.TokenResponse, error) {
-	// Mandatory field validation
 	if b.AppKey == "" || b.AppSecret == "" || token.RefreshToken == "" || b.Username == "" || b.Password == "" {
 		return nil, common.ErrEmptyRequiredField
 	}
