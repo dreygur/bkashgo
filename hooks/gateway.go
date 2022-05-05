@@ -6,7 +6,7 @@ import (
 	"github.com/dreygur/bkashgo/common"
 )
 
-func GenerateURI(IsLiveStore bool, uri string) *url.URL {
+func GenerateURI(IsLiveStore bool, uri string) string {
 	var storeUrl string
 	if IsLiveStore {
 		storeUrl = common.BKASH_LIVE_GATEWAY
@@ -17,5 +17,5 @@ func GenerateURI(IsLiveStore bool, uri string) *url.URL {
 	u, _ := url.ParseRequestURI(storeUrl)
 	u.Path += uri
 
-	return u
+	return u.String()
 }

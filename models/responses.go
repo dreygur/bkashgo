@@ -21,7 +21,7 @@ type CreateAgreementValidationResponse struct {
 	Status    string `json:"status,omitempty"`
 }
 
-// CreateAgreement Response
+// Create Agreement Response
 type CreateAgreementResponse struct {
 	PaymentID            string `json:"paymentID,omitempty"`
 	BkashURL             string `json:"bkashURL,omitempty"`
@@ -33,7 +33,7 @@ type CreateAgreementResponse struct {
 	StatusMessage        string `json:"statusMessage,omitempty"`
 }
 
-// ExecuteAgreement Response
+// Execute Agreement Response
 type ExecuteAgreementResponse struct {
 	PaymentID            string `json:"paymentID,omitempty"`
 	AgreementID          string `json:"agreementID,omitempty"`
@@ -45,7 +45,7 @@ type ExecuteAgreementResponse struct {
 	StatusMessage        string `json:"statusMessage,omitempty"`
 }
 
-// QueryAgreement Response
+// Query Agreement Response
 type QueryAgreementResponse struct {
 	PaymentID            string `json:"paymentID,omitempty"`
 	AgreementID          string `json:"agreementID,omitempty"`
@@ -59,7 +59,7 @@ type QueryAgreementResponse struct {
 	StatusMessage        string `json:"statusMessage,omitempty"`
 }
 
-// CancelAgreement Response
+// Cancel Agreement Response
 type CancelAgreementResponse struct {
 	PaymentID         string `json:"paymentID,omitempty"`
 	AgreementID       string `json:"agreementID,omitempty"`
@@ -70,7 +70,7 @@ type CancelAgreementResponse struct {
 	StatusMessage     string `json:"statusMessage,omitempty"`
 }
 
-// CreatePayment Response
+// Create Payment Response
 type CreatePaymentResponse struct {
 	PaymentID             string `json:"paymentID,omitempty"`
 	AgreementID           string `json:"agreementID,omitempty"`
@@ -89,7 +89,7 @@ type CreatePaymentResponse struct {
 	StatusMessage         string `json:"statusMessage,omitempty"`
 }
 
-// ExecutePayment Response
+// Execute Payment Response
 type ExecutePaymentResponse struct {
 	PaymentID             string `json:"paymentID,omitempty"`
 	AgreementID           string `json:"agreementID,omitempty"`
@@ -108,7 +108,7 @@ type ExecutePaymentResponse struct {
 	StatusMessage         string `json:"statusMessage,omitempty"`
 }
 
-// QueryPayment Response
+// Query Payment Response
 type QueryPaymentResponse struct {
 	PaymentID              string `json:"paymentID,omitempty"`
 	Mode                   string `json:"mode,omitempty"`
@@ -126,7 +126,7 @@ type QueryPaymentResponse struct {
 	StatusMessage          string `json:"statusMessage,omitempty"`
 }
 
-// SearchTransaction Response
+// Search Transaction Response
 type SearchTransactionResponse struct {
 	Amount                string `json:"amount,omitempty"`
 	CompletedTime         string `json:"completed_time,omitempty"`
