@@ -1,3 +1,4 @@
+// Package models provides the structs for the response
 package models
 
 // Grant/Refresh Token Request

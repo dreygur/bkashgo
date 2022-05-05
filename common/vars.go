@@ -1,7 +1,9 @@
+// Package common provides the constants and error codes
 package common
 
 import "errors"
 
+// Constants
 const BKASH_SANDBOX_GATEWAY = "https://tokenized.sandbox.bka.sh/v1.2.0-beta/tokenized/checkout"
 const BKASH_LIVE_GATEWAY = "https://tokenized.pay.bka.sh/v1.2.0-beta/tokenized/checkout"
 const BKASH_GRANT_TOKEN_URI = "/token/grant"
@@ -16,5 +18,6 @@ const BKASH_QUERY_PAYMENT_URI = "/payment/status"
 const BKASH_SEARCH_TRXN_URI = "/general/searchTransaction"
 const BKASH_REFUND_URI = "/payment/refund"
 
+// SDK Error Codes
 var ErrEmptyRequiredField = errors.New("empty required field")
 var ErrTimeout = errors.New("api request timeout")

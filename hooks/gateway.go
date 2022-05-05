@@ -1,3 +1,4 @@
+// Package hooks provides the methods for making requests to Bkash API
 package hooks
 
 import (
