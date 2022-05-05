@@ -10,7 +10,7 @@ import (
 var (
 	createAgreementResponse *models.CreateAgreementResponse
 	executeAgreementReponse *models.ExecuteAgreementResponse
-	// createPaymentResponse   *models.CreatePaymentResponse
+	createPaymentResponse   *models.CreatePaymentResponse
 )
 
 func TestAgreement(t *testing.T) {
@@ -65,45 +65,45 @@ func TestAgreement(t *testing.T) {
 		executeAgreementReponse = resp
 	})
 
-	// t.Run("test CreatePayment", func(t *testing.T) {
-	// 	req := &models.CreateRequest{
-	// 		Mode:                    "0001",
-	// 		PayerReference:          "01723888888",
-	// 		CallbackURL:             "https://shikho.tech/payment",
-	// 		AgreementID:             executeAgreementReponse.AgreementID,
-	// 		Amount:                  "12",
-	// 		Currency:                "BDT",
-	// 		Intent:                  "sale",
-	// 		MerchantInvoiceNumber:   "Inv0124",
-	// 		MerchantAssociationInfo: "MI05MID54RF09123456One",
-	// 	}
-	// 	resp, err := bkash.CreatePayment(req, token, false)
+	t.Run("test CreatePayment", func(t *testing.T) {
+		req := &models.CreateRequest{
+			Mode:                    "0001",
+			PayerReference:          "01723888888",
+			CallbackURL:             "https://shikho.tech/payment",
+			AgreementID:             executeAgreementReponse.AgreementID,
+			Amount:                  "12",
+			Currency:                "BDT",
+			Intent:                  "sale",
+			MerchantInvoiceNumber:   "Inv0124",
+			MerchantAssociationInfo: "MI05MID54RF09123456One",
+		}
+		resp, err := bkash.CreatePayment(req, token)
 
-	// 	if err != nil {
-	// 		t.Error(err.Error())
-	// 		t.Fail()
-	// 	}
+		if err != nil {
+			t.Error(err.Error())
+			t.Fail()
+		}
 
-	// 	if resp == nil || resp.StatusCode != "0000" {
-	// 		t.Fatal("payment creattion failed")
-	// 	}
+		if resp == nil || resp.StatusCode != "0000" {
+			t.Fatal("payment creattion failed")
+		}
 
-	// 	createPaymentResponse = resp
-	// })
+		createPaymentResponse = resp
+	})
 
-	// t.Run("test executePayment", func(t *testing.T) {
-	// 	req := &models.ExecutePaymentRequest{
-	// 		PaymentID: createPaymentResponse.PaymentID,
-	// 	}
-	// 	resp, err := paymentService.ExecutePayment(req, token, false)
+	t.Run("test executePayment", func(t *testing.T) {
+		req := &models.ExecuteRequest{
+			PaymentID: createPaymentResponse.PaymentID,
+		}
+		resp, err := bkash.ExecutePayment(req, token)
 
-	// 	if err != nil {
-	// 		t.Error(err.Error())
-	// 		t.Fail()
-	// 	}
+		if err != nil {
+			t.Error(err.Error())
+			t.Fail()
+		}
 
-	// 	if resp == nil || resp.StatusCode != "0000" {
-	// 		t.Fatal("payment creattion failed")
-	// 	}
-	// })
+		if resp == nil || resp.StatusCode != "0000" {
+			t.Fatal("payment creattion failed")
+		}
+	})
 }

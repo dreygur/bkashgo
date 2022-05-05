@@ -12,9 +12,6 @@ Ref:
 
 - Tokenized Checkout Process
 - Token Management Overview
-- Create Payment
-- Execute Payment
-- Query Payment
 - Search Transaction
 - Refund Transaction
 - Refund Status
@@ -26,5 +23,8 @@ Ref:
 - Execute Agreement
 - Query Agreement
 - Cancel Agreement
+- Create Payment
+- Execute Payment
+- Query Payment
 
 Made with ❤️ by [Rakibul Yeasin](https://facebook.com/dreygur)

@@ -2,10 +2,12 @@ package hooks
 
 import (
 	"bytes"
+	"context"
 	"fmt"
 	"io/ioutil"
 	"net/http"
 	"strconv"
+	"time"
 )
 
 func DoRequest(data []byte, username, password, url string, authorized bool) ([]byte, error) {
@@ -14,6 +16,11 @@ func DoRequest(data []byte, username, password, url string, authorized bool) ([]
 	if err != nil {
 		return nil, err
 	}
+
+	ctx, cancel := context.WithTimeout(r.Context(), time.Second*30)
+	defer cancel()
+
+	r = r.WithContext(ctx)
 
 	r.Header.Add("Content-Type", "application/json")
 	r.Header.Add("Content-Length", strconv.Itoa(len(data)))
