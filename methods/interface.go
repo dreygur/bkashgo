@@ -1,5 +1,7 @@
 package methods
 
+import "github.com/dreygur/bkashgo/models"
+
 type Bkash struct {
 	Username  string
 	Password  string
@@ -9,4 +11,7 @@ type Bkash struct {
 	IsLiveStore bool
 }
 
-type BkashTokenizedCheckoutService interface{}
+type BkashTokenizedCheckoutService interface {
+	GrantToken() (*models.TokenResponse, error)
+	RefreshToken(token *models.TokenRequest) (*models.TokenResponse, error)
+}
