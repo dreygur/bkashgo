@@ -8,6 +8,7 @@ import (
 	"github.com/dreygur/bkashgo/models"
 )
 
+// Search for Transactions
 func (b *Bkash) Search(trxID string, token *models.TokenResponse) (*models.SearchTransactionResponse, error) {
 	if b.AppKey == "" || token.IdToken == "" || trxID == "" {
 		return nil, common.ErrEmptyRequiredField

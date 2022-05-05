@@ -8,6 +8,7 @@ import (
 	"github.com/dreygur/bkashgo/models"
 )
 
+// GetToken creates a access token using bkash credentials
 func (b *Bkash) GetToken() (*models.TokenResponse, error) {
 	if b.AppKey == "" || b.AppSecret == "" || b.Username == "" || b.Password == "" {
 		return nil, common.ErrEmptyRequiredField
@@ -39,6 +40,7 @@ func (b *Bkash) GetToken() (*models.TokenResponse, error) {
 	return &resp, nil
 }
 
+// RefreshToken refreshes the access token
 func (b *Bkash) RefreshToken(token *models.TokenRequest) (*models.TokenResponse, error) {
 	if b.AppKey == "" || b.AppSecret == "" || token.RefreshToken == "" || b.Username == "" || b.Password == "" {
 		return nil, common.ErrEmptyRequiredField

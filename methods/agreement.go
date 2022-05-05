@@ -9,6 +9,7 @@ import (
 	"github.com/dreygur/bkashgo/models"
 )
 
+// CreateAgreement Initiates an agreement request for a user
 func (b *Bkash) CreateAgreement(request *models.CreateRequest, token *models.TokenResponse) (*models.CreateAgreementResponse, error) {
 	if b.AppKey == "" || token.IdToken == "" || request.Mode == "" || request.CallbackURL == "" {
 		return nil, common.ErrEmptyRequiredField
@@ -40,6 +41,7 @@ func (b *Bkash) CreateAgreement(request *models.CreateRequest, token *models.Tok
 	return &resp, nil
 }
 
+// ExecuteAgreement executes the agreement using the paymentID received from CreateAgreementResponse
 func (b *Bkash) ExecuteAgreement(request *models.ExecuteRequest, token *models.TokenResponse) (*models.ExecuteAgreementResponse, error) {
 	if b.AppKey == "" || token.IdToken == "" || request.PaymentID == "" {
 		return nil, common.ErrEmptyRequiredField
@@ -66,6 +68,7 @@ func (b *Bkash) ExecuteAgreement(request *models.ExecuteRequest, token *models.T
 	return &resp, nil
 }
 
+// QueryAgreement queries an agreement by agreementID
 func (b *Bkash) QueryAgreement(request *models.AgreementRequest, token *models.TokenResponse) (*models.QueryAgreementResponse, error) {
 	if b.AppKey == "" || token.IdToken == "" || request.AgreementID == "" {
 		return nil, common.ErrEmptyRequiredField
@@ -92,6 +95,7 @@ func (b *Bkash) QueryAgreement(request *models.AgreementRequest, token *models.T
 	return &resp, nil
 }
 
+// CancelAgreement cancels an agreement by agreementID
 func (b *Bkash) CancelAgreement(request *models.CreateRequest, token *models.TokenResponse) (*models.CancelAgreementResponse, error) {
 	if b.AppKey == "" || token.IdToken == "" || request.AgreementID == "" {
 		return nil, common.ErrEmptyRequiredField

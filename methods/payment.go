@@ -10,6 +10,7 @@ import (
 	"github.com/dreygur/bkashgo/models"
 )
 
+// CreatePayment Initiates a payment request for an user
 func (b *Bkash) CreatePayment(request *models.CreateRequest, token *models.TokenResponse) (*models.CreatePaymentResponse, error) {
 	if b.AppKey == "" || token.IdToken == "" || request.Mode == "" || request.CallbackURL == "" {
 		return nil, common.ErrEmptyRequiredField
@@ -41,6 +42,7 @@ func (b *Bkash) CreatePayment(request *models.CreateRequest, token *models.Token
 	return &resp, nil
 }
 
+// ExecutePayment executes the agreement using the paymentID received from CreateAgreementResponse
 func (b *Bkash) ExecutePayment(request *models.ExecuteRequest, token *models.TokenResponse) (*models.ExecutePaymentResponse, error) {
 	if b.AppKey == "" || token.IdToken == "" || request.PaymentID == "" {
 		return nil, common.ErrEmptyRequiredField
@@ -55,9 +57,6 @@ func (b *Bkash) ExecutePayment(request *models.ExecuteRequest, token *models.Tok
 
 	body, err := hooks.DoRequest(jsonData, token.IdToken, b.AppKey, executePayment, true)
 	if err != nil {
-		// if error is timeout then call query payment
-		// if complete return success payload (*models.ExecutePaymentResponse, nil)
-		// if initiated - return something that should be handled by client (maybe return some kind of timeout error)
 		if errors.Is(err, context.DeadlineExceeded) {
 			queryResp, err := b.QueryPayment(&models.ExecuteRequest{
 				PaymentID: request.PaymentID,
@@ -97,6 +96,7 @@ func (b *Bkash) ExecutePayment(request *models.ExecuteRequest, token *models.Tok
 	return &resp, nil
 }
 
+// QueryPayment queries a payment by paymentID
 func (b *Bkash) QueryPayment(request *models.ExecuteRequest, token *models.TokenResponse) (*models.QueryPaymentResponse, error) {
 	if b.AppKey == "" || token.IdToken == "" || request.PaymentID == "" {
 		return nil, common.ErrEmptyRequiredField

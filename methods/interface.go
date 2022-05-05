@@ -19,7 +19,7 @@ type BkashTokenizedCheckoutService interface {
 	GetToken() (*models.TokenResponse, error)
 	// RefreshToken refreshes the access token
 	RefreshToken(token *models.TokenRequest) (*models.TokenResponse, error)
-	// CreateAgreement Initiates an agreement request for a user
+	// CreateAgreement Initiates an agreement request for an user
 	CreateAgreement(request *models.CreateRequest, token *models.TokenResponse) (*models.CreateAgreementResponse, error)
 	// ExecuteAgreement executes the agreement using the paymentID received from CreateAgreementResponse
 	ExecuteAgreement(request *models.ExecuteRequest, token *models.TokenResponse) (*models.ExecuteAgreementResponse, error)
@@ -28,7 +28,7 @@ type BkashTokenizedCheckoutService interface {
 	// CancelAgreement cancels an agreement by agreementID
 	CancelAgreement(request *models.CreateRequest, token *models.TokenResponse) (*models.CancelAgreementResponse, error)
 
-	// CreatePayment Initiates a payment request for a customer.
+	// CreatePayment Initiates a payment request for an user
 	CreatePayment(request *models.CreateRequest, token *models.TokenResponse) (*models.CreatePaymentResponse, error)
 	// ExecutePayment executes the agreement using the paymentID received from CreateAgreementResponse
 	ExecutePayment(request *models.ExecuteRequest, token *models.TokenResponse) (*models.ExecutePaymentResponse, error)
