@@ -12,11 +12,6 @@ Ref:
 
 - Tokenized Checkout Process
 - Token Management Overview
-- Refresh Token
-- Create Agreement
-- Execute Agreement
-- Query Agreement
-- Cancel Agreement
 - Create Payment
 - Execute Payment
 - Query Payment
@@ -26,5 +21,10 @@ Ref:
 
 ### __Implemented__
 - Grant Token
+- Refresh Token
+- Create Agreement
+- Execute Agreement
+- Query Agreement
+- Cancel Agreement
 
 Made with ❤️ by [Rakibul Yeasin](https://facebook.com/dreygur)
