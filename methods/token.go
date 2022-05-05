@@ -8,7 +8,7 @@ import (
 	"github.com/dreygur/bkashgo/models"
 )
 
-func (b *Bkash) GrantToken() (*models.TokenResponse, error) {
+func (b *Bkash) GetToken() (*models.TokenResponse, error) {
 	if b.AppKey == "" || b.AppSecret == "" || b.Username == "" || b.Password == "" {
 		return nil, common.ErrEmptyRequiredField
 	}

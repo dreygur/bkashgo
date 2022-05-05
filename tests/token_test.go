@@ -15,10 +15,10 @@ var (
 	isLiveStore = false
 )
 
-func TestGrantToken(t *testing.T) {
+func TestGetToken(t *testing.T) {
 	bkash := bkashgo.GetBkash(username, password, appKey, appSecret, isLiveStore)
 
-	token, err := bkash.GrantToken()
+	token, err := bkash.GetToken()
 	if err != nil {
 		t.Error(err.Error())
 		t.Fail()

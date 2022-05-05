@@ -16,7 +16,7 @@ var (
 func TestAgreement(t *testing.T) {
 	bkash := bkashgo.GetBkash(username, password, appKey, appSecret, isLiveStore)
 
-	token, err := bkash.GrantToken()
+	token, err := bkash.GetToken()
 	if err != nil {
 		t.Fatal(err)
 	}

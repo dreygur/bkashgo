@@ -1,8 +1,6 @@
 package methods
 
 import (
-	"net/http"
-
 	"github.com/dreygur/bkashgo/models"
 )
 
@@ -17,12 +15,11 @@ type Bkash struct {
 
 type BkashTokenizedCheckoutService interface {
 	// Token
-	GrantToken() (*models.TokenResponse, error)
+	GetToken() (*models.TokenResponse, error)
 	RefreshToken(token *models.TokenRequest) (*models.TokenResponse, error)
 
 	// Agreement
 	CreateAgreement(request *models.CreateRequest, token *models.TokenResponse) (*models.CreateAgreementResponse, error)
-	CreateAgreementValidationListener(r *http.Request) (*models.CreateAgreementValidationResponse, error)
 	ExecuteAgreement(request *models.ExecuteRequest, token *models.TokenResponse) (*models.ExecuteAgreementResponse, error)
 	QueryAgreement(request *models.AgreementRequest, token *models.TokenResponse) (*models.QueryAgreementResponse, error)
 	CancelAgreement(request *models.CreateRequest, token *models.TokenResponse) (*models.CancelAgreementResponse, error)
@@ -34,4 +31,8 @@ type BkashTokenizedCheckoutService interface {
 
 	// Search Transactions
 	Search(trxID string, token *models.TokenResponse) (*models.SearchTransactionResponse, error)
+
+	// Refund
+	// This function can be used to refund a payment or check the status of a refund
+	Refund(r *models.RefundRequest, t *models.TokenResponse) (*models.RefundResponse, error)
 }

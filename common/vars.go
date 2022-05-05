@@ -14,6 +14,7 @@ const BKASH_CREATE_PAYMENT_URI = "/create"
 const BKASH_EXECUTE_PAYMENT_URI = "/execute"
 const BKASH_QUERY_PAYMENT_URI = "/payment/status"
 const BKASH_SEARCH_TRXN_URI = "/general/searchTransaction"
+const BKASH_REFUND_URI = "/payment/refund"
 
 var ErrEmptyRequiredField = errors.New("empty required field")
 var ErrTimeout = errors.New("api request timeout")

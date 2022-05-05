@@ -3,7 +3,6 @@ package methods
 import (
 	"encoding/json"
 	"errors"
-	"net/http"
 
 	"github.com/dreygur/bkashgo/common"
 	"github.com/dreygur/bkashgo/hooks"
@@ -39,21 +38,6 @@ func (b *Bkash) CreateAgreement(request *models.CreateRequest, token *models.Tok
 	}
 
 	return &resp, nil
-}
-
-func (b *Bkash) CreateAgreementValidationListener(r *http.Request) (*models.CreateAgreementValidationResponse, error) {
-	if r.Method != "POST" {
-		return nil, errors.New("method not allowed")
-	}
-
-	var agreementTValidationResponse models.CreateAgreementValidationResponse
-
-	err := json.NewDecoder(r.Body).Decode(&agreementTValidationResponse)
-	if err != nil {
-		return nil, err
-	}
-
-	return &agreementTValidationResponse, nil
 }
 
 func (b *Bkash) ExecuteAgreement(request *models.ExecuteRequest, token *models.TokenResponse) (*models.ExecuteAgreementResponse, error) {

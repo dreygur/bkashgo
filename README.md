@@ -2,19 +2,14 @@
 
 This go SDK aim to implement bKash tokenized api
 
+GoDoc: [DOCUMENTATION](https://pkg.go.dev/github.com/dreygur/bkashgo)
+
 Ref:
 - [Integration Guide](https://developer.bka.sh/docs/tokenized-checkout-process)
 - [Specification/Reference](https://developer.bka.sh/reference)
 
-## Intended Feautures to implement
-### __Tokenized Checkout__
-
-- Tokenized Checkout Process
-- Token Management Overview
-- Refund Transaction
-- Refund Status
-
-### __Implemented__
+## Feautures
+### Tokenized Checkout
 - Grant Token
 - Refresh Token
 - Create Agreement
@@ -25,5 +20,42 @@ Ref:
 - Execute Payment
 - Query Payment
 - Search Transaction
+- Refund Transaction
+- Refund Status
+
+## Examples:
+
+__To Generate a Token__
+```go
+// bKash Instance
+bkash := bkashgo.GetBkash(username, password, appKey, appSecret, isLiveStore)
+
+// Token and error message
+token, err := bkash.GetToken()
+if err != nil {
+  panic(err)
+}
+fmt.Println(token)
+```
+
+__To Generate Refresh Token__
+```go
+// bKash Instance
+bkash := bkashgo.GetBkash(username, password, appKey, appSecret, isLiveStore)
+
+// Token and error message
+token, err := bkash.GetToken()
+if err != nil {
+  panic(err)
+}
+
+refreshToken, err := bkash.RefreshToken(&models.TokenRequest{
+  RefreshToken: token.RefreshToken
+})
+if err != nil {
+  panic(err)
+}
+fmt.Println(refreshToken)
+```
 
 Made with ❤️ by [Rakibul Yeasin](https://facebook.com/dreygur)
