@@ -16,7 +16,6 @@ var (
 )
 
 func TestGrantToken(t *testing.T) {
-
 	bkash := bkashgo.GetBkash(username, password, appKey, appSecret, isLiveStore)
 
 	token, err := bkash.GrantToken()
@@ -28,29 +27,17 @@ func TestGrantToken(t *testing.T) {
 	if token == nil || len(token.IdToken) == 0 || len(token.RefreshToken) == 0 || token.StatusCode != "0000" {
 		t.Error("invalid token")
 	}
-}
 
-func TestRefreshToken(t *testing.T) {
-
-	bkash := bkashgo.GetBkash(username, password, appKey, appSecret, isLiveStore)
-
-	token, err := bkash.GrantToken()
-	if err != nil {
-		t.Error(err.Error())
-		t.Fail()
-	}
-	if token == nil || len(token.IdToken) == 0 || len(token.RefreshToken) == 0 || token.StatusCode != "0000" {
-		t.Error("invalid token")
-	}
-
-	refreshToken, err := bkash.RefreshToken(&models.TokenRequest{
-		RefreshToken: token.RefreshToken,
+	t.Run("test RefreshToken", func(t *testing.T) {
+		refreshToken, err := bkash.RefreshToken(&models.TokenRequest{
+			RefreshToken: token.RefreshToken,
+		})
+		if err != nil {
+			t.Error(err.Error())
+			t.Fail()
+		}
+		if refreshToken == nil || len(token.IdToken) == 0 || len(token.RefreshToken) == 0 || token.StatusCode != "0000" {
+			t.Error("invalid token")
+		}
 	})
-	if err != nil {
-		t.Error(err.Error())
-		t.Fail()
-	}
-	if refreshToken == nil || len(token.IdToken) == 0 || len(token.RefreshToken) == 0 || token.StatusCode != "0000" {
-		t.Error("invalid token")
-	}
 }
