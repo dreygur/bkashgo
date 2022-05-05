@@ -31,4 +31,7 @@ type BkashTokenizedCheckoutService interface {
 	CreatePayment(request *models.CreateRequest, token *models.TokenResponse) (*models.CreatePaymentResponse, error)
 	ExecutePayment(request *models.ExecuteRequest, token *models.TokenResponse) (*models.ExecutePaymentResponse, error)
 	QueryPayment(request *models.ExecuteRequest, token *models.TokenResponse) (*models.QueryPaymentResponse, error)
+
+	// Search Transactions
+	Search(trxID string, token *models.TokenResponse) (*models.SearchTransactionResponse, error)
 }
