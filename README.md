@@ -2,7 +2,7 @@
 
 This go SDK aim to implement bKash tokenized api
 
-GoDoc: [DOCUMENTATION](https://pkg.go.dev/github.com/dreygur/bkashgo)
+[![Go Reference](https://pkg.go.dev/badge/github.com/dreygur/bkashgo.svg)](https://pkg.go.dev/github.com/dreygur/bkashgo)  [![CodeQL](https://github.com/dreygur/bkashgo/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/dreygur/bkashgo/actions/workflows/codeql-analysis.yml)
 
 Ref:
 - [Integration Guide](https://developer.bka.sh/docs/tokenized-checkout-process)
