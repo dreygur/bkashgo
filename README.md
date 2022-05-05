@@ -7,7 +7,6 @@ Ref:
 - [Specification/Reference](https://developer.bka.sh/reference)
 
 ## Intended Feautures to implement
----
 ### __Tokenized Checkout__
 
 - Tokenized Checkout Process
