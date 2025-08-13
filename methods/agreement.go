@@ -9,6 +9,12 @@ import (
 	"github.com/dreygur/bkashgo/models"
 )
 
+// Debug
+func (b *Bkash) Debug(enable bool) *Bkash {
+	b.debug = enable
+	return b
+}
+
 // CreateAgreement Initiates an agreement request for a user
 func (b *Bkash) CreateAgreement(request *models.CreateRequest, token *models.TokenResponse) (*models.CreateAgreementResponse, error) {
 	if b.AppKey == "" || token.IdToken == "" || request.Mode == "" || request.CallbackURL == "" {
