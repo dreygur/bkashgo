@@ -2,14 +2,17 @@
 
 This go SDK aim to implement bKash tokenized api
 
-[![Go Reference](https://pkg.go.dev/badge/github.com/dreygur/bkashgo.svg)](https://pkg.go.dev/github.com/dreygur/bkashgo)  [![CodeQL](https://github.com/dreygur/bkashgo/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/dreygur/bkashgo/actions/workflows/codeql-analysis.yml)
+[![Go Reference](https://pkg.go.dev/badge/github.com/dreygur/bkashgo.svg)](https://pkg.go.dev/github.com/dreygur/bkashgo) [![CodeQL](https://github.com/dreygur/bkashgo/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/dreygur/bkashgo/actions/workflows/codeql-analysis.yml)
 
 Ref:
+
 - [Integration Guide](https://developer.bka.sh/docs/tokenized-checkout-process)
 - [Specification/Reference](https://developer.bka.sh/reference)
 
 ## Feautures
+
 ### Tokenized Checkout
+
 - Grant Token
 - Refresh Token
 - Create Agreement
@@ -25,7 +28,8 @@ Ref:
 
 ## Examples:
 
-__To Generate a Token__
+**To Generate a Token**
+
 ```go
 // bKash Instance
 bkash := bkashgo.GetBkash(username, password, appKey, appSecret, isLiveStore)
@@ -38,7 +42,8 @@ if err != nil {
 fmt.Println(token)
 ```
 
-__To Generate Refresh Token__
+**To Generate Refresh Token**
+
 ```go
 // bKash Instance
 bkash := bkashgo.GetBkash(username, password, appKey, appSecret, isLiveStore)
@@ -56,6 +61,12 @@ if err != nil {
   panic(err)
 }
 fmt.Println(refreshToken)
+```
+
+If you wish to debug the JSON Request and Response
+
+```go
+bkash := bkashgo.GetBkash(username, password, appKey, appSecret, isLiveStore).Debug(true)
 ```
 
 Made with ❤️ by [Rakibul Yeasin](https://facebook.com/dreygur)

@@ -23,12 +23,15 @@ func (b *Bkash) CreatePayment(request *models.CreateRequest, token *models.Token
 
 	createPaymentURL := hooks.GenerateURI(b.IsLiveStore, common.BKASH_CREATE_PAYMENT_URI)
 
-	jsonData, err := json.Marshal(request)
-	if err != nil {
-		return nil, err
+	payload := &hooks.Request{
+		Debug:      b.debug,
+		Payload:    request,
+		Username:   token.IdToken,
+		Password:   b.AppKey,
+		Url:        createPaymentURL,
+		Authorized: true,
 	}
-
-	body, err := hooks.DoRequest(jsonData, token.IdToken, b.AppKey, createPaymentURL, true)
+	body, err := hooks.DoRequest(payload)
 	if err != nil {
 		return nil, err
 	}
@@ -50,12 +53,15 @@ func (b *Bkash) ExecutePayment(request *models.ExecuteRequest, token *models.Tok
 
 	executePayment := hooks.GenerateURI(b.IsLiveStore, common.BKASH_EXECUTE_PAYMENT_URI)
 
-	jsonData, err := json.Marshal(request)
-	if err != nil {
-		return nil, err
+	payload := &hooks.Request{
+		Debug:      b.debug,
+		Payload:    request,
+		Username:   token.IdToken,
+		Password:   b.AppKey,
+		Url:        executePayment,
+		Authorized: true,
 	}
-
-	body, err := hooks.DoRequest(jsonData, token.IdToken, b.AppKey, executePayment, true)
+	body, err := hooks.DoRequest(payload)
 	if err != nil {
 		if errors.Is(err, context.DeadlineExceeded) {
 			queryResp, err := b.QueryPayment(&models.ExecuteRequest{
@@ -104,12 +110,15 @@ func (b *Bkash) QueryPayment(request *models.ExecuteRequest, token *models.Token
 
 	queryPaymentURL := hooks.GenerateURI(b.IsLiveStore, common.BKASH_QUERY_PAYMENT_URI)
 
-	jsonData, err := json.Marshal(request)
-	if err != nil {
-		return nil, err
+	payload := &hooks.Request{
+		Debug:      b.debug,
+		Payload:    request,
+		Username:   token.IdToken,
+		Password:   b.AppKey,
+		Url:        queryPaymentURL,
+		Authorized: true,
 	}
-
-	body, err := hooks.DoRequest(jsonData, token.IdToken, b.AppKey, queryPaymentURL, true)
+	body, err := hooks.DoRequest(payload)
 	if err != nil {
 		return nil, err
 	}

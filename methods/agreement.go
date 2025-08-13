@@ -9,6 +9,12 @@ import (
 	"github.com/dreygur/bkashgo/models"
 )
 
+// Debug
+func (b *Bkash) Debug(enable bool) *Bkash {
+	b.debug = enable
+	return b
+}
+
 // CreateAgreement Initiates an agreement request for a user
 func (b *Bkash) CreateAgreement(request *models.CreateRequest, token *models.TokenResponse) (*models.CreateAgreementResponse, error) {
 	if b.AppKey == "" || token.IdToken == "" || request.Mode == "" || request.CallbackURL == "" {
@@ -22,12 +28,15 @@ func (b *Bkash) CreateAgreement(request *models.CreateRequest, token *models.Tok
 
 	createAgreementURL := hooks.GenerateURI(b.IsLiveStore, common.BKASH_CREATE_AGREEMENT_URI)
 
-	jsonData, err := json.Marshal(request)
-	if err != nil {
-		return nil, err
+	payload := &hooks.Request{
+		Debug:      b.debug,
+		Payload:    request,
+		Username:   token.IdToken,
+		Password:   b.AppKey,
+		Url:        createAgreementURL,
+		Authorized: true,
 	}
-
-	body, err := hooks.DoRequest(jsonData, token.IdToken, b.AppKey, createAgreementURL, true)
+	body, err := hooks.DoRequest(payload)
 	if err != nil {
 		return nil, err
 	}
@@ -49,12 +58,15 @@ func (b *Bkash) ExecuteAgreement(request *models.ExecuteRequest, token *models.T
 
 	executeAgreementURL := hooks.GenerateURI(b.IsLiveStore, common.BKASH_EXECUTE_AGREEMENT_URI)
 
-	jsonData, err := json.Marshal(request)
-	if err != nil {
-		return nil, err
+	payload := &hooks.Request{
+		Debug:      b.debug,
+		Payload:    request,
+		Username:   token.IdToken,
+		Password:   b.AppKey,
+		Url:        executeAgreementURL,
+		Authorized: true,
 	}
-
-	body, err := hooks.DoRequest(jsonData, token.IdToken, b.AppKey, executeAgreementURL, true)
+	body, err := hooks.DoRequest(payload)
 	if err != nil {
 		return nil, err
 	}
@@ -76,12 +88,15 @@ func (b *Bkash) QueryAgreement(request *models.AgreementRequest, token *models.T
 
 	queryAgreementURL := hooks.GenerateURI(b.IsLiveStore, common.BKASH_QUERY_AGREEMENT_URI)
 
-	jsonData, err := json.Marshal(request)
-	if err != nil {
-		return nil, err
+	payload := &hooks.Request{
+		Debug:      b.debug,
+		Payload:    request,
+		Username:   token.IdToken,
+		Password:   b.AppKey,
+		Url:        queryAgreementURL,
+		Authorized: true,
 	}
-
-	body, err := hooks.DoRequest(jsonData, token.IdToken, b.AppKey, queryAgreementURL, true)
+	body, err := hooks.DoRequest(payload)
 	if err != nil {
 		return nil, err
 	}
@@ -103,12 +118,15 @@ func (b *Bkash) CancelAgreement(request *models.CreateRequest, token *models.Tok
 
 	cancelAgreementURL := hooks.GenerateURI(b.IsLiveStore, common.BKASH_CANCEL_AGREEMENT_URI)
 
-	jsonData, err := json.Marshal(request)
-	if err != nil {
-		return nil, err
+	payload := &hooks.Request{
+		Debug:      b.debug,
+		Payload:    request,
+		Username:   token.IdToken,
+		Password:   b.AppKey,
+		Url:        cancelAgreementURL,
+		Authorized: true,
 	}
-
-	body, err := hooks.DoRequest(jsonData, token.IdToken, b.AppKey, cancelAgreementURL, true)
+	body, err := hooks.DoRequest(payload)
 	if err != nil {
 		return nil, err
 	}

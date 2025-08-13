@@ -12,6 +12,7 @@ type Bkash struct {
 	AppSecret string
 
 	IsLiveStore bool
+	debug       bool
 }
 
 type BkashTokenizedCheckoutService interface {
@@ -40,4 +41,6 @@ type BkashTokenizedCheckoutService interface {
 
 	// This function can be used to refund a payment or check the status of a refund
 	Refund(r *models.RefundRequest, t *models.TokenResponse) (*models.RefundResponse, error)
+
+	Debug(enable bool) *Bkash
 }

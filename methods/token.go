@@ -21,12 +21,15 @@ func (b *Bkash) GetToken() (*models.TokenResponse, error) {
 
 	grantTokenURL := hooks.GenerateURI(b.IsLiveStore, common.BKASH_GRANT_TOKEN_URI)
 
-	jsonData, err := json.Marshal(data)
-	if err != nil {
-		return nil, err
+	payload := &hooks.Request{
+		Debug:      b.debug,
+		Payload:    data,
+		Username:   b.Username,
+		Password:   b.Password,
+		Url:        grantTokenURL,
+		Authorized: false,
 	}
-
-	body, err := hooks.DoRequest(jsonData, b.Username, b.Password, grantTokenURL, false)
+	body, err := hooks.DoRequest(payload)
 	if err != nil {
 		return nil, err
 	}
@@ -54,12 +57,16 @@ func (b *Bkash) RefreshToken(token *models.TokenRequest) (*models.TokenResponse,
 
 	refreshTokenURL := hooks.GenerateURI(b.IsLiveStore, common.BKASH_REFRESH_TOKEN_URI)
 
-	jsonData, err := json.Marshal(data)
-	if err != nil {
-		return nil, err
+	payload := &hooks.Request{
+		Debug:      b.debug,
+		Payload:    data,
+		Username:   b.Username,
+		Password:   b.Password,
+		Url:        refreshTokenURL,
+		Authorized: false,
 	}
+	body, err := hooks.DoRequest(payload)
 
-	body, err := hooks.DoRequest(jsonData, b.Username, b.Password, refreshTokenURL, false)
 	if err != nil {
 		return nil, err
 	}
