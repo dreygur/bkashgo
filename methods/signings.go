@@ -6,7 +6,7 @@ import (
 	"encoding/base64"
 	"encoding/pem"
 	"errors"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"reflect"
 
@@ -37,7 +37,7 @@ func IsMessageSignatureValid(msg *models.BkashIPNPayload) error {
 		return errors.New("unable to get certificate err: " + resp.Status)
 	}
 
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return err
 	}

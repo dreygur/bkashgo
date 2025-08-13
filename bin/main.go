@@ -16,7 +16,7 @@ var (
 )
 
 func main() {
-	bkash := bkashgo.GetBkash(username, password, appKey, appSecret, isLiveStore)
+	bkash := bkashgo.GetBkash(username, password, appKey, appSecret, isLiveStore).Debug(true)
 	token, err := bkash.GetToken()
 	if err != nil {
 		panic(err)

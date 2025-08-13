@@ -19,12 +19,15 @@ func (b *Bkash) Search(trxID string, token *models.TokenResponse) (*models.Searc
 		TrxID: trxID,
 	}
 
-	jsonData, err := json.Marshal(request)
-	if err != nil {
-		return nil, err
+	payload := &hooks.Request{
+		Debug:      b.debug,
+		Payload:    request,
+		Username:   token.IdToken,
+		Password:   b.AppKey,
+		Url:        executePayment,
+		Authorized: true,
 	}
-
-	body, err := hooks.DoRequest(jsonData, token.IdToken, b.AppKey, executePayment, true)
+	body, err := hooks.DoRequest(payload)
 	if err != nil {
 		return nil, err
 	}

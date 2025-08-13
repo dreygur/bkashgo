@@ -15,12 +15,16 @@ func (b *Bkash) Refund(r *models.RefundRequest, t *models.TokenResponse) (*model
 	}
 
 	refundURL := hooks.GenerateURI(b.IsLiveStore, common.BKASH_REFUND_URI)
-	jsonData, err := json.Marshal(r)
-	if err != nil {
-		return nil, err
-	}
 
-	body, err := hooks.DoRequest(jsonData, t.IdToken, b.AppKey, refundURL, true)
+	payload := &hooks.Request{
+		Debug:      b.debug,
+		Payload:    r,
+		Username:   t.IdToken,
+		Password:   b.AppKey,
+		Url:        refundURL,
+		Authorized: true,
+	}
+	body, err := hooks.DoRequest(payload)
 	if err != nil {
 		return nil, err
 	}
