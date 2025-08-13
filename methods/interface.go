@@ -42,5 +42,6 @@ type BkashTokenizedCheckoutService interface {
 	// This function can be used to refund a payment or check the status of a refund
 	Refund(r *models.RefundRequest, t *models.TokenResponse) (*models.RefundResponse, error)
 
+	// This method allows to get RAW JSON for Request/Response
 	Debug(enable bool) *Bkash
 }

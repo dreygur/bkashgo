@@ -6,11 +6,12 @@ import (
 	"github.com/dreygur/bkashgo/common"
 	"github.com/dreygur/bkashgo/hooks"
 	"github.com/dreygur/bkashgo/models"
+	"github.com/dreygur/bkashgo/utils"
 )
 
 // GetToken creates a access token using bkash credentials
 func (b *Bkash) GetToken() (*models.TokenResponse, error) {
-	if b.AppKey == "" || b.AppSecret == "" || b.Username == "" || b.Password == "" {
+	if !utils.RequireNonEmpty(b.AppKey, b.AppSecret, b.Username, b.Password) {
 		return nil, common.ErrEmptyRequiredField
 	}
 
@@ -19,16 +20,15 @@ func (b *Bkash) GetToken() (*models.TokenResponse, error) {
 		AppSecret: b.AppSecret,
 	}
 
-	grantTokenURL := hooks.GenerateURI(b.IsLiveStore, common.BKASH_GRANT_TOKEN_URI)
-
 	payload := &hooks.Request{
 		Debug:      b.debug,
 		Payload:    data,
 		Username:   b.Username,
 		Password:   b.Password,
-		Url:        grantTokenURL,
+		Url:        hooks.GenerateURI(b.IsLiveStore, common.BKASH_GRANT_TOKEN_URI),
 		Authorized: false,
 	}
+
 	body, err := hooks.DoRequest(payload)
 	if err != nil {
 		return nil, err
@@ -45,7 +45,7 @@ func (b *Bkash) GetToken() (*models.TokenResponse, error) {
 
 // RefreshToken refreshes the access token
 func (b *Bkash) RefreshToken(token *models.TokenRequest) (*models.TokenResponse, error) {
-	if b.AppKey == "" || b.AppSecret == "" || token.RefreshToken == "" || b.Username == "" || b.Password == "" {
+	if !utils.RequireNonEmpty(b.AppKey, b.AppSecret, token.RefreshToken, b.Username, b.Password) {
 		return nil, common.ErrEmptyRequiredField
 	}
 
@@ -55,18 +55,16 @@ func (b *Bkash) RefreshToken(token *models.TokenRequest) (*models.TokenResponse,
 		RefreshToken: token.RefreshToken,
 	}
 
-	refreshTokenURL := hooks.GenerateURI(b.IsLiveStore, common.BKASH_REFRESH_TOKEN_URI)
-
 	payload := &hooks.Request{
 		Debug:      b.debug,
 		Payload:    data,
 		Username:   b.Username,
 		Password:   b.Password,
-		Url:        refreshTokenURL,
+		Url:        hooks.GenerateURI(b.IsLiveStore, common.BKASH_REFRESH_TOKEN_URI),
 		Authorized: false,
 	}
-	body, err := hooks.DoRequest(payload)
 
+	body, err := hooks.DoRequest(payload)
 	if err != nil {
 		return nil, err
 	}

@@ -7,17 +7,12 @@ import (
 	"github.com/dreygur/bkashgo/common"
 	"github.com/dreygur/bkashgo/hooks"
 	"github.com/dreygur/bkashgo/models"
+	"github.com/dreygur/bkashgo/utils"
 )
-
-// Debug
-func (b *Bkash) Debug(enable bool) *Bkash {
-	b.debug = enable
-	return b
-}
 
 // CreateAgreement Initiates an agreement request for a user
 func (b *Bkash) CreateAgreement(request *models.CreateRequest, token *models.TokenResponse) (*models.CreateAgreementResponse, error) {
-	if b.AppKey == "" || token.IdToken == "" || request.Mode == "" || request.CallbackURL == "" {
+	if !utils.RequireNonEmpty(b.AppKey, token.IdToken, request.Mode, request.CallbackURL) {
 		return nil, common.ErrEmptyRequiredField
 	}
 
@@ -26,14 +21,12 @@ func (b *Bkash) CreateAgreement(request *models.CreateRequest, token *models.Tok
 		return nil, errors.New("invalid mode value")
 	}
 
-	createAgreementURL := hooks.GenerateURI(b.IsLiveStore, common.BKASH_CREATE_AGREEMENT_URI)
-
 	payload := &hooks.Request{
 		Debug:      b.debug,
 		Payload:    request,
 		Username:   token.IdToken,
 		Password:   b.AppKey,
-		Url:        createAgreementURL,
+		Url:        hooks.GenerateURI(b.IsLiveStore, common.BKASH_CREATE_AGREEMENT_URI),
 		Authorized: true,
 	}
 	body, err := hooks.DoRequest(payload)
@@ -52,18 +45,16 @@ func (b *Bkash) CreateAgreement(request *models.CreateRequest, token *models.Tok
 
 // ExecuteAgreement executes the agreement using the paymentID received from CreateAgreementResponse
 func (b *Bkash) ExecuteAgreement(request *models.ExecuteRequest, token *models.TokenResponse) (*models.ExecuteAgreementResponse, error) {
-	if b.AppKey == "" || token.IdToken == "" || request.PaymentID == "" {
+	if !utils.RequireNonEmpty(b.AppKey, token.IdToken, request.PaymentID) {
 		return nil, common.ErrEmptyRequiredField
 	}
-
-	executeAgreementURL := hooks.GenerateURI(b.IsLiveStore, common.BKASH_EXECUTE_AGREEMENT_URI)
 
 	payload := &hooks.Request{
 		Debug:      b.debug,
 		Payload:    request,
 		Username:   token.IdToken,
 		Password:   b.AppKey,
-		Url:        executeAgreementURL,
+		Url:        hooks.GenerateURI(b.IsLiveStore, common.BKASH_EXECUTE_AGREEMENT_URI),
 		Authorized: true,
 	}
 	body, err := hooks.DoRequest(payload)
@@ -82,20 +73,19 @@ func (b *Bkash) ExecuteAgreement(request *models.ExecuteRequest, token *models.T
 
 // QueryAgreement queries an agreement by agreementID
 func (b *Bkash) QueryAgreement(request *models.AgreementRequest, token *models.TokenResponse) (*models.QueryAgreementResponse, error) {
-	if b.AppKey == "" || token.IdToken == "" || request.AgreementID == "" {
+	if !utils.RequireNonEmpty(b.AppKey, token.IdToken, request.AgreementID) {
 		return nil, common.ErrEmptyRequiredField
 	}
-
-	queryAgreementURL := hooks.GenerateURI(b.IsLiveStore, common.BKASH_QUERY_AGREEMENT_URI)
 
 	payload := &hooks.Request{
 		Debug:      b.debug,
 		Payload:    request,
 		Username:   token.IdToken,
 		Password:   b.AppKey,
-		Url:        queryAgreementURL,
+		Url:        hooks.GenerateURI(b.IsLiveStore, common.BKASH_QUERY_AGREEMENT_URI),
 		Authorized: true,
 	}
+
 	body, err := hooks.DoRequest(payload)
 	if err != nil {
 		return nil, err
@@ -112,18 +102,16 @@ func (b *Bkash) QueryAgreement(request *models.AgreementRequest, token *models.T
 
 // CancelAgreement cancels an agreement by agreementID
 func (b *Bkash) CancelAgreement(request *models.CreateRequest, token *models.TokenResponse) (*models.CancelAgreementResponse, error) {
-	if b.AppKey == "" || token.IdToken == "" || request.AgreementID == "" {
+	if !utils.RequireNonEmpty(b.AppKey, token.IdToken, request.AgreementID) {
 		return nil, common.ErrEmptyRequiredField
 	}
-
-	cancelAgreementURL := hooks.GenerateURI(b.IsLiveStore, common.BKASH_CANCEL_AGREEMENT_URI)
 
 	payload := &hooks.Request{
 		Debug:      b.debug,
 		Payload:    request,
 		Username:   token.IdToken,
 		Password:   b.AppKey,
-		Url:        cancelAgreementURL,
+		Url:        hooks.GenerateURI(b.IsLiveStore, common.BKASH_CANCEL_AGREEMENT_URI),
 		Authorized: true,
 	}
 	body, err := hooks.DoRequest(payload)

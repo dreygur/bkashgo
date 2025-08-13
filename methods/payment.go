@@ -8,11 +8,12 @@ import (
 	"github.com/dreygur/bkashgo/common"
 	"github.com/dreygur/bkashgo/hooks"
 	"github.com/dreygur/bkashgo/models"
+	"github.com/dreygur/bkashgo/utils"
 )
 
 // CreatePayment Initiates a payment request for an user
 func (b *Bkash) CreatePayment(request *models.CreateRequest, token *models.TokenResponse) (*models.CreatePaymentResponse, error) {
-	if b.AppKey == "" || token.IdToken == "" || request.Mode == "" || request.CallbackURL == "" {
+	if !utils.RequireNonEmpty(b.AppKey, token.IdToken, request.Mode, request.CallbackURL) {
 		return nil, common.ErrEmptyRequiredField
 	}
 
@@ -21,14 +22,12 @@ func (b *Bkash) CreatePayment(request *models.CreateRequest, token *models.Token
 		return nil, errors.New("invalid mode value")
 	}
 
-	createPaymentURL := hooks.GenerateURI(b.IsLiveStore, common.BKASH_CREATE_PAYMENT_URI)
-
 	payload := &hooks.Request{
 		Debug:      b.debug,
 		Payload:    request,
 		Username:   token.IdToken,
 		Password:   b.AppKey,
-		Url:        createPaymentURL,
+		Url:        hooks.GenerateURI(b.IsLiveStore, common.BKASH_CREATE_PAYMENT_URI),
 		Authorized: true,
 	}
 	body, err := hooks.DoRequest(payload)
@@ -47,20 +46,19 @@ func (b *Bkash) CreatePayment(request *models.CreateRequest, token *models.Token
 
 // ExecutePayment executes the agreement using the paymentID received from CreateAgreementResponse
 func (b *Bkash) ExecutePayment(request *models.ExecuteRequest, token *models.TokenResponse) (*models.ExecutePaymentResponse, error) {
-	if b.AppKey == "" || token.IdToken == "" || request.PaymentID == "" {
+	if !utils.RequireNonEmpty(b.AppKey, token.IdToken, request.PaymentID) {
 		return nil, common.ErrEmptyRequiredField
 	}
-
-	executePayment := hooks.GenerateURI(b.IsLiveStore, common.BKASH_EXECUTE_PAYMENT_URI)
 
 	payload := &hooks.Request{
 		Debug:      b.debug,
 		Payload:    request,
 		Username:   token.IdToken,
 		Password:   b.AppKey,
-		Url:        executePayment,
+		Url:        hooks.GenerateURI(b.IsLiveStore, common.BKASH_EXECUTE_PAYMENT_URI),
 		Authorized: true,
 	}
+
 	body, err := hooks.DoRequest(payload)
 	if err != nil {
 		if errors.Is(err, context.DeadlineExceeded) {
@@ -104,20 +102,19 @@ func (b *Bkash) ExecutePayment(request *models.ExecuteRequest, token *models.Tok
 
 // QueryPayment queries a payment by paymentID
 func (b *Bkash) QueryPayment(request *models.ExecuteRequest, token *models.TokenResponse) (*models.QueryPaymentResponse, error) {
-	if b.AppKey == "" || token.IdToken == "" || request.PaymentID == "" {
+	if !utils.RequireNonEmpty(b.AppKey, token.IdToken, request.PaymentID) {
 		return nil, common.ErrEmptyRequiredField
 	}
-
-	queryPaymentURL := hooks.GenerateURI(b.IsLiveStore, common.BKASH_QUERY_PAYMENT_URI)
 
 	payload := &hooks.Request{
 		Debug:      b.debug,
 		Payload:    request,
 		Username:   token.IdToken,
 		Password:   b.AppKey,
-		Url:        queryPaymentURL,
+		Url:        hooks.GenerateURI(b.IsLiveStore, common.BKASH_QUERY_PAYMENT_URI),
 		Authorized: true,
 	}
+
 	body, err := hooks.DoRequest(payload)
 	if err != nil {
 		return nil, err
